@@ -16,6 +16,31 @@ Note: the [Docker version](https://hub.docker.com/r/tinymediamanager/tinymediama
 
 You can either build it manually and run the local generated binary, or run directly from this repo.
 
+### Install Package
+
+If you have flakes enabled, you can add this package to your system configuration:
+
+```nix
+{
+  inputs.tinyMediaManager-flake.url = "github:TheFacc/tinyMediaManager-flake";
+
+  outputs = { self, nixpkgs, tinyMediaManager-flake }: {
+    nixosConfigurations.my-machine = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux";
+      modules = [
+        {
+          environment.systemPackages = with nixpkgs.pkgs; [
+            tinyMediaManager-flake.packages.x86_64-linux.default
+          ];
+        }
+      ];
+    };
+  };
+}
+```
+
+Then run `sudo nixos-rebuild switch` to install tinyMediaManager system-wide.
+
 ### Build manually
 
 Clone the repository and build:
