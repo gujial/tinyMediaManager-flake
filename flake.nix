@@ -52,7 +52,7 @@
             zenity # GUI file dialog
           ];
 
-          buildPhase = ''
+          installPhase = ''
           mkdir -p $out/opt/tmm
           cp -r * $out/opt/tmm
 
@@ -70,9 +70,7 @@ Categories=AudioVideo;Video;Utility;
 Icon=tinymediamanager
 DESKTOP
           chmod 644 $out/share/applications/tinymediamanager.desktop
-          '';
 
-          installPhase = ''
           mkdir -p $out/bin
           cat > $out/bin/tinyMediaManager << EOF
 #!/bin/sh
