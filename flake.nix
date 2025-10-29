@@ -52,21 +52,11 @@
             zenity # GUI file dialog
           ];
 
-          installPhase = ''
+          buildPhase = ''
           mkdir -p $out/opt/tmm
           cp -r * $out/opt/tmm
 
-          mkdir -p $out/bin
-          cat > $out/bin/tinyMediaManager << EOF
-            #!/bin/sh
-            export LD_LIBRARY_PATH=${pkgs.libzen}/lib:${pkgs.libmediainfo}/lib:\$LD_LIBRARY_PATH
-            export PATH=${pkgs.zenity}/bin:\$PATH
-            cd $out/opt/tmm
-            exec ${pkgs.zulu23}/bin/java -Djava.library.path=./native -cp "tmm.jar:lib/*" org.tinymediamanager.TinyMediaManager "\$@"
-            EOF
-          chmod +x $out/bin/tinyMediaManager
-
-          mkdir -p $out/share/applications $out/share/icons/hicolor/256x256/apps
+          mkdir -p $out/share/applications $out/share/icons/hicolor/128x128/apps
           cp $out/opt/tmm/tmm.png $out/share/icons/hicolor/128x128/apps/tinymediamanager.png
           cat > $out/share/applications/tinymediamanager.desktop << DESKTOP
             [Desktop Entry]
@@ -80,6 +70,18 @@
             Icon=tinymediamanager
             DESKTOP
           chmod 644 $out/share/applications/tinymediamanager.desktop
+          '';
+
+          installPhase = ''
+          mkdir -p $out/bin
+          cat > $out/bin/tinyMediaManager << EOF
+            #!/bin/sh
+            export LD_LIBRARY_PATH=${pkgs.libzen}/lib:${pkgs.libmediainfo}/lib:\$LD_LIBRARY_PATH
+            export PATH=${pkgs.zenity}/bin:\$PATH
+            cd $out/opt/tmm
+            exec ${pkgs.zulu23}/bin/java -Djava.library.path=./native -cp "tmm.jar:lib/*" org.tinymediamanager.TinyMediaManager "\$@"
+            EOF
+          chmod +x $out/bin/tinyMediaManager
           '';
         };
       }
