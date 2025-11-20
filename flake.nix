@@ -77,7 +77,7 @@ DESKTOP
 export LD_LIBRARY_PATH=${pkgs.libzen}/lib:${pkgs.libmediainfo}/lib:\$LD_LIBRARY_PATH
 export PATH=${pkgs.zenity}/bin:\$PATH
 cd $out/opt/tmm
-exec ${pkgs.zulu23}/bin/java -Djava.library.path=./native -cp "tmm.jar:lib/*" org.tinymediamanager.TinyMediaManager "\$@"
+exec ${pkgs.jdk}/bin/java -Djava.library.path=./native -cp "tmm.jar:lib/*" org.tinymediamanager.TinyMediaManager "\$@"
 EOF
           chmod +x $out/bin/tinyMediaManager
           '';
